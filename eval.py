@@ -18,6 +18,12 @@ if __name__ == "__main__":
 
     if model_name == "gemini":
         agent = GeminiEvaluator(api_key="AIzaSyAr6OfqGdlxo0BuKDE_8gJvZf00Vd6TRH0")
+    
+    elif model_name == "gpt":
+        agent = GPTEvaluator(api_key="0836470ebf0e4368afc31bd03a7d26f9")
+
+    # elif model_name == "llava":
+    #     agent = 
 
     pbar = tqdm(total=1000)
 
