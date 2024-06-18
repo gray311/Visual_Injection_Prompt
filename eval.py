@@ -57,5 +57,7 @@ if __name__ == "__main__":
             f.write(f"{json.dumps(outputs)}\n")
             f.flush()
 
+            pbar.update(1)
+
      
     
