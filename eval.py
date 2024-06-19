@@ -20,14 +20,14 @@ if __name__ == "__main__":
         agent = GeminiEvaluator(api_key="AIzaSyAr6OfqGdlxo0BuKDE_8gJvZf00Vd6TRH0")
     
     elif model_name == "gpt":
-        agent = GPTEvaluator(api_key="0836470ebf0e4368afc31bd03a7d26f9")
+        agent = GPTEvaluator(api_key="")
 
     # elif model_name == "llava":
     #     agent = 
 
     pbar = tqdm(total=1000)
 
-    with open("./playground/MME_Benchmark_Visual_Prompt_Injection/mme_visual_prompt_injection.jsonl", "r") as f:
+    with open("./playground/Benchmark_Visual_Prompt_Injection/visual_prompt_injection1.jsonl", "r") as f:
         data = [json.loads(line) for line in f.readlines()]
     
     output_dir = os.path.join("./playground", "results")
@@ -37,9 +37,9 @@ if __name__ == "__main__":
     with open(os.path.join(output_dir, f"{model_name}.json"), "w") as f:
         for line in data:
             random.shuffle(message)
-            question = message[0]
+            question = line['instruction']
 
-            image_list = [os.path.join("./playground/MME_Benchmark_Visual_Prompt_Injection/images", line['image'])]
+            image_list = [os.path.join("./playground/Benchmark_Visual_Prompt_Injection/images", line['image'])]
             
             question = {
                 "prompted_system_content": "",
@@ -49,15 +49,13 @@ if __name__ == "__main__":
 
             
             response = agent.generate_answer(question)
-            outputs = {
-                "response": response['prediction']
-            }
-            print(outputs)
-
+            outputs = line
+            outputs.update(response=response['prediction'])
+          
             f.write(f"{json.dumps(outputs)}\n")
             f.flush()
 
-            pbar.update(1)
+   
 
      
     
